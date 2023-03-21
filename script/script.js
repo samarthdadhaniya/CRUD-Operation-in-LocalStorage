@@ -208,3 +208,53 @@ function deleteData(index) {
       location.reload(); // Reload the current page
     }
   }
+
+// Function to update/Edit the data in local storage
+function editData(index) {
+    var productList;
+    if (localStorage.getItem("productList") == null) {
+      productList = [];
+    } else {
+      productList = JSON.parse(localStorage.getItem("productList"));
+    }
+  
+    document.getElementById("id-edit").value = productList[index].id;
+    document.getElementById("name-edit").value = productList[index].name;
+    document.getElementById("price-edit").value = productList[index].price;
+    document.getElementById("description-edit").value = 
+      productList[index].description;
+  
+    var imagePreview = document.getElementById("image-div");
+    imagePreview.src = productList[index].image;
+    document.getElementById("image-div").innerHTML =
+      "<img src=" + productList[index].image + " width='100%' height='100%'>";
+  
+    var imageEdit = document.getElementById("image-edit");
+    imageEdit.onchange = function (event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      reader.onload = function () {
+        productList[index].image = reader.result;
+        imagePreview.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    };
+  
+    document.querySelector("#update").onclick = function () {
+      productList[index].id = document.getElementById("id-edit").value;
+      productList[index].name = document.getElementById("name-edit").value;
+      productList[index].price = document.getElementById("price-edit").value;
+      productList[index].description =
+        document.getElementById("description-edit").value;
+  
+      localStorage.setItem("productList", JSON.stringify(productList));
+      location.reload();
+      showData();
+      document.getElementById("id-edit").value = "";
+      document.getElementById("name-edit").value = "";
+      document.getElementById("price-edit").value = "";
+      document.getElementById("description-edit").value = "";
+      document.getElementById("close-btn").click();
+      alert("Data Updated Successfully");
+    };
+  }
