@@ -88,3 +88,49 @@ function validateForm() {
     }
     return true;
   }
+
+  // Function to add Data
+function AddData() {
+    if (validateForm() == true) {
+      let name = document.getElementById("name").value;
+      let price = document.getElementById("price").value;
+      let description = document.getElementById("description").value;
+      let image = document.getElementById("inputGroupFile01");
+      const reader = new FileReader();
+  
+      let productList;
+      if (localStorage.getItem("productList") == null) {
+        productList = [];
+      } else {
+        productList = JSON.parse(localStorage.getItem("productList"));
+      }
+  
+      // generate new ID by incrementing the highest existing ID
+      let id = 1;
+      if (productList.length > 0) {
+        let ids = productList.map((product) => product.id);
+        id = Math.max(...ids) + 1;
+      }
+  
+      reader.readAsDataURL(image.files[0]);
+      reader.addEventListener("load", () => {
+        productList.push({
+          id: id,
+          name: name,
+          description: description,
+          price: price,
+          image: reader.result,
+        });
+        localStorage.setItem("productList", JSON.stringify(productList));
+        location.reload();
+        showData();
+      });
+  
+      document.getElementById("name").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("inputGroupFile01").value = "";
+      document.getElementById("close-btn").click();
+      alert("Data Added Successfully");
+    }
+  }
