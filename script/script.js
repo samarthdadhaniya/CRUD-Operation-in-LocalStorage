@@ -322,3 +322,50 @@ function searchBar() {
     document.querySelector("#curd-table").classList.add("d-none");
     document.querySelector("#sort-table").innerHTML = html;
   }
+
+// Filter Functions
+const selectElem = document.querySelector("#sort-select");
+selectElem.addEventListener("change", (event) => {
+  const sortBy = event.target.value;
+  filterProduct(sortBy); // perform the sorting action based on the selected value
+  if (sortBy == "refresh-btn") {
+    location.reload(); // refresh the page
+  }
+  // console.log(sortBy);
+});
+// For filter the data
+function filterProduct(sortvalue) {
+  let sortedProduct = JSON.parse(localStorage.getItem("sortedProduct")) ?? [];
+  let productList = JSON.parse(localStorage.getItem("productList")) ?? [];
+  sortedProduct = productList;
+  localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
+  // console.log('if',sortedProduct)
+  if (sortvalue == "desc") {
+    let desc = true;
+    sortedProduct = sortedProduct.sort((a, b) =>
+      desc ? b.id - a.id : a.id - b.id
+    );
+    desc = !desc;
+    console.log("descending", sortedProduct);
+    return filteredData(sortedProduct);
+  } else if (sortvalue == "asc") {
+    let desc = false;
+    sortedProduct = sortedProduct.sort((a, b) =>
+      desc ? b.id - a.id : a.id - b.id
+    );
+    console.log("Asc", sortedProduct);
+    return filteredData(sortedProduct);
+  } else if (sortvalue == "name") {
+    sortedProduct = sortedProduct = sortedProduct.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    console.log("name", sortedProduct);
+    return filteredData(sortedProduct);
+  } else if (sortvalue == "price") {
+    sortedProduct = sortedProduct.sort((a, b) => b.price - a.price);
+    console.log("Price", sortedProduct);
+    return filteredData(sortedProduct);
+  } else {
+    return false;
+  }
+}
