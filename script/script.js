@@ -190,3 +190,21 @@ function AddData() {
       alert("Data Added Successfully");
     }
   }
+
+// Function to Delete Data
+function deleteData(index) {
+    var productList;
+    if (localStorage.getItem("productList") == null) {
+      productList = [];
+    } else {
+      productList = JSON.parse(localStorage.getItem("productList"));
+    }
+  
+    // Display a confirmation message to the user
+    if (confirm("Are you sure you want to delete this item?")) {
+      productList.splice(index, 1);
+      localStorage.setItem("productList", JSON.stringify(productList));
+      showData();
+      location.reload(); // Reload the current page
+    }
+  }
