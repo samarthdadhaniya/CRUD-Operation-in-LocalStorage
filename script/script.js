@@ -258,3 +258,67 @@ function editData(index) {
       alert("Data Updated Successfully");
     };
   }
+
+//for Search the data
+function searchBar() {
+    const searchvalue = document.querySelector("#serachProductText").value;
+    console.log(searchvalue);
+    let sortedItem = [];
+    let sortedProduct = JSON.parse(localStorage.getItem("productList")) ?? [];
+    let regex = new RegExp(searchvalue, "i");
+    for (let element of sortedProduct) {
+      const item = element;
+      if (regex.test(item.name)) {
+        sortedItem.push(element);
+      }
+    }
+    console.log(sortedItem);
+    searchProduct(sortedItem);
+  }
+  
+  function searchProduct(sortedItem) {
+    let html = "";
+    console.log("searchProduct", sortedItem);
+    if (sortedItem.length === 0) {
+      // Display an image if the productList array is empty
+      html += `<div class="card-body">
+        <div class="row gx-2">
+          <div class="col">
+            <div class="p-3">
+              <img src="img/search-not-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products" style="width: 18rem; height: 18rem;">
+              <p class="text-center">No Similar Items Found..!</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else {
+      sortedItem.forEach(function (element, index) {
+        html += 
+        `<div>
+        <div class='row gx-2'>
+        <div class='col'>
+        <div class='p-3'>
+        <div class='card d-flex card-all'>
+        <div class='card-body'style=" height: 11rem; width: 16rem;">
+        <h5 class='card-title text-center'><strong>Item No.-</strong> ${element.id} </h5>
+        <img src="${element.image}" class="card-img-top" alt='Image' style=" height: 7rem; width: 14rem;">
+        </div>
+        <ul class='list-group list-group-flush'>
+        <li class='list-group-item'><strong>Product -</strong>  ${element.name}  </li>
+        <li class='list-group-item h-25'><strong>Description -</strong> ${element.description}  </li>
+        <li class='list-group-item'><strong>Price -</strong>  $${element.price}</li>
+        </ul>
+        <div class='card-body text-center'>
+         <button onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2' class='btn btn-success' style="width: 49%">Edit</button>
+         <button onclick='deleteData("${index}")' type='button' class='btn btn-danger' style="width: 49%">Delete</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>`;
+      });
+    }
+    document.querySelector("#curd-table").classList.add("d-none");
+    document.querySelector("#sort-table").innerHTML = html;
+  }
