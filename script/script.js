@@ -1,105 +1,101 @@
-// Validation for Input
+/** 
+ * @function validateForm
+ *  
+ * @description This Function is used to validate the input fields of the form before submitting. It checks if the name 
+ *              and price fields are not empty, if the price is a valid number and doesn't start with zero, if the 
+ *              description field has a maximum of 50 characters and is not empty, and if an image is attached and its size and 
+ *              type are valid. If any of the validation checks fail, the function returns false and an error message 
+ *              is displayed to the user. If all checks pass, the function returns true and the form can be submitted.
+ * 
+ * @param none
+*/
 function validateForm() {
     // Get references to the form elements
-    var nameInput = document.getElementById("name");
-    var priceInput = document.getElementById("price");
-    var descriptionInput = document.getElementById("description");
-    var image = document.getElementById("inputGroupFile01");
-  
+    let nameInput = document.getElementById("name");
+    let priceInput = document.getElementById("price");
+    let descriptionInput = document.getElementById("description");
+    let image = document.getElementById("inputGroupFile01");
+
     // Get the values from the input fields
-    var name = nameInput.value.trim();
-    var price = priceInput.value.trim();
-  
+    let name = nameInput.value.trim();
+    let price = priceInput.value.trim();
+
     // Validate name input
     if (name === "") {
-  
-      document.getElementById("name-error-msg").innerHTML = " Please enter your name";
-      // alert("Please enter your name");
-      return false;
-    }else{
-      document.getElementById("name-error-msg").innerHTML = "";
+        document.getElementById("name-error-msg").innerHTML = " Please enter your name";
+        return false;
+    } else {
+        document.getElementById("name-error-msg").innerHTML = "";
     }
-  
+
     // Validate price input
     if (price === "") {
-      document.getElementById("price-error-msg").innerHTML = " Please enter the price";
-      // alert("Please enter the price");
-      return false;
-    }else
-    {
-      document.getElementById("price-error-msg").innerHTML = "";
+        document.getElementById("price-error-msg").innerHTML = " Please enter the price";
+        return false;
+    } else {
+        document.getElementById("price-error-msg").innerHTML = "";
     }
-  
+
     if (isNaN(price) || price.startsWith("0")) {
-      document.getElementById("price-error-msg").innerHTML = " Please enter a valid price number that does not start with zero";
-      // alert("Please enter a valid price number that does not start with zero");
-      return false;
+        document.getElementById("price-error-msg").innerHTML = " Please enter a valid price number that not start with zero";
+        return false;
     }
-    else
-    {
-      document.getElementById("price-error-msg").innerHTML = "";
+    else {
+        document.getElementById("price-error-msg").innerHTML = "";
     }
-  
-   
+
+
     if (descriptionInput.value.length > 50) {
-      document.getElementById("disc-error-msg").innerHTML = " Description can be maximum 50 characters";
-      // alert("Description can be maximum 50 characters");
-      return false;
-    } else if(descriptionInput.value == "" ){
-      document.getElementById("disc-error-msg").innerHTML = " Please enter the Discription";
-      return false;
-    } else
-    {
-      document.getElementById("disc-error-msg").innerHTML = "";
+        document.getElementById("disc-error-msg").innerHTML = " Description can be maximum 50 characters";
+        return false;
+    } else if (descriptionInput.value == "") {
+        document.getElementById("disc-error-msg").innerHTML = " Please enter the Discription";
+        return false;
+    } else {
+        document.getElementById("disc-error-msg").innerHTML = "";
     }
-  
+
     // Validate image input
     if (image.files.length === 0) {
-      document.getElementById("image-error-msg").innerHTML = " Please attach an image";
-      // alert("Please attach an image");
-      return false;
-    }else
-    {
-      document.getElementById("image-error-msg").innerHTML = ""
+        document.getElementById("image-error-msg").innerHTML = " Please attach an image";
+        return false;
+    } else {
+        document.getElementById("image-error-msg").innerHTML = ""
     }
-  
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     if (!allowedExtensions.exec(image.files[0].name)) {
-      document.getElementById("image-error-msg").innerHTML = " Please attach a valid image file (jpg, jpeg, png, or gif)";
-      // alert("Please attach a valid image file (jpg, jpeg, png, or gif)");
-      image.value = "";
-      return false;
-    }else
-    {
-      document.getElementById("image-error-msg").innerHTML = ""
+        document.getElementById("image-error-msg").innerHTML = " Please attach a valid image file (jpg, jpeg, png, or gif)";
+        image.value = "";
+        return false;
+    } else {
+        document.getElementById("image-error-msg").innerHTML = ""
     }
-  
+
     // Check the file size of the uploaded image
-    var fileSize = image.files[0].size / 1024; // in KB
+    let fileSize = image.files[0].size / 1024; // in KB
     if (fileSize > 750) {
-      document.getElementById("image-error-msg").innerHTML = " Please attach an image that is smaller than 750KB";
-      // alert("Please attach an image that is smaller than 750KB");
-      image.value = "";
-      return false;
+        document.getElementById("image-error-msg").innerHTML = " Please attach an image that is smaller than 750KB";
+        image.value = "";
+        return false;
     }
-    else
-    {
-      document.getElementById("image-error-msg").innerHTML = "";
+    else {
+        document.getElementById("image-error-msg").innerHTML = "";
     }
     return true;
-  }
+}
 
-  function showData() {
+function showData() {
     let productList;
     if (localStorage.getItem("productList") == null) {
-      productList = [];
+        productList = [];
     } else {
-      productList = JSON.parse(localStorage.getItem("productList"));
+        productList = JSON.parse(localStorage.getItem("productList"));
     }
     let html = "";
     if (productList.length === 0) {
-      // Display an image if the productList array is empty
-      html += `<div class="card-body">
+        // Display an image if the productList array is empty
+        html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
@@ -109,10 +105,10 @@ function validateForm() {
         </div>
       </div>`;
     } else {
-      productList.forEach(function (element, index) {
-        // Generate HTML for each product card
-        html += 
-        `<div>
+        productList.forEach(function (element, index) {
+            // Generate HTML for each product card
+            html +=
+                `<div>
         <div class='row gx-2'>
         <div class='col'>
         <div class='p-3'>
@@ -137,127 +133,127 @@ function validateForm() {
         </div>
         </div>
         </div>`;
-      });
+        });
     }
     document.querySelector("#curd-table").innerHTML = html;
-  }
-  
-  // Load all data when document or page load
-  showData();
+}
 
-  // Function to add Data
+// Load all data when document or page load
+showData();
+
+// Function to add Data
 function AddData() {
     if (validateForm() == true) {
-      let name = document.getElementById("name").value;
-      let price = document.getElementById("price").value;
-      let description = document.getElementById("description").value;
-      let image = document.getElementById("inputGroupFile01");
-      const reader = new FileReader();
-  
-      let productList;
-      if (localStorage.getItem("productList") == null) {
-        productList = [];
-      } else {
-        productList = JSON.parse(localStorage.getItem("productList"));
-      }
-  
-      // generate new ID by incrementing the highest existing ID
-      let id = 1;
-      if (productList.length > 0) {
-        let ids = productList.map((product) => product.id);
-        id = Math.max(...ids) + 1;
-      }
-  
-      reader.readAsDataURL(image.files[0]);
-      reader.addEventListener("load", () => {
-        productList.push({
-          id: id,
-          name: name,
-          description: description,
-          price: price,
-          image: reader.result,
+        let name = document.getElementById("name").value;
+        let price = document.getElementById("price").value;
+        let description = document.getElementById("description").value;
+        let image = document.getElementById("inputGroupFile01");
+        const reader = new FileReader();
+
+        let productList;
+        if (localStorage.getItem("productList") == null) {
+            productList = [];
+        } else {
+            productList = JSON.parse(localStorage.getItem("productList"));
+        }
+
+        // generate new ID by incrementing the highest existing ID
+        let id = 1;
+        if (productList.length > 0) {
+            let ids = productList.map((product) => product.id);
+            id = Math.max(...ids) + 1;
+        }
+
+        reader.readAsDataURL(image.files[0]);
+        reader.addEventListener("load", () => {
+            productList.push({
+                id: id,
+                name: name,
+                description: description,
+                price: price,
+                image: reader.result,
+            });
+            localStorage.setItem("productList", JSON.stringify(productList));
+            location.reload();
+            showData();
         });
-        localStorage.setItem("productList", JSON.stringify(productList));
-        location.reload();
-        showData();
-      });
-  
-      document.getElementById("name").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("description").value = "";
-      document.getElementById("inputGroupFile01").value = "";
-      document.getElementById("close-btn").click();
-      alert("Data Added Successfully");
+
+        document.getElementById("name").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("inputGroupFile01").value = "";
+        document.getElementById("close-btn").click();
+        alert("Data Added Successfully");
     }
-  }
+}
 
 // Function to Delete Data
 function deleteData(index) {
-    var productList;
+    let productList;
     if (localStorage.getItem("productList") == null) {
-      productList = [];
+        productList = [];
     } else {
-      productList = JSON.parse(localStorage.getItem("productList"));
+        productList = JSON.parse(localStorage.getItem("productList"));
     }
-  
+
     // Display a confirmation message to the user
     if (confirm("Are you sure you want to delete this item?")) {
-      productList.splice(index, 1);
-      localStorage.setItem("productList", JSON.stringify(productList));
-      showData();
-      location.reload(); // Reload the current page
+        productList.splice(index, 1);
+        localStorage.setItem("productList", JSON.stringify(productList));
+        showData();
+        location.reload(); // Reload the current page
     }
-  }
+}
 
 // Function to update/Edit the data in local storage
 function editData(index) {
-    var productList;
+    let productList;
     if (localStorage.getItem("productList") == null) {
-      productList = [];
+        productList = [];
     } else {
-      productList = JSON.parse(localStorage.getItem("productList"));
+        productList = JSON.parse(localStorage.getItem("productList"));
     }
-  
+
     document.getElementById("id-edit").value = productList[index].id;
     document.getElementById("name-edit").value = productList[index].name;
     document.getElementById("price-edit").value = productList[index].price;
-    document.getElementById("description-edit").value = 
-      productList[index].description;
-  
-    var imagePreview = document.getElementById("image-div");
+    document.getElementById("description-edit").value =
+        productList[index].description;
+
+    let imagePreview = document.getElementById("image-div");
     imagePreview.src = productList[index].image;
     document.getElementById("image-div").innerHTML =
-      "<img src=" + productList[index].image + " width='100%' height='100%'>";
-  
-    var imageEdit = document.getElementById("image-edit");
+        "<img src=" + productList[index].image + " width='100%' height='100%'>";
+
+    let imageEdit = document.getElementById("image-edit");
     imageEdit.onchange = function (event) {
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      reader.onload = function () {
-        productList[index].image = reader.result;
-        imagePreview.src = reader.result;
-      };
-      reader.readAsDataURL(file);
+        let file = event.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function () {
+            productList[index].image = reader.result;
+            imagePreview.src = reader.result;
+        };
+        reader.readAsDataURL(file);
     };
-  
+
     document.querySelector("#update").onclick = function () {
-      productList[index].id = document.getElementById("id-edit").value;
-      productList[index].name = document.getElementById("name-edit").value;
-      productList[index].price = document.getElementById("price-edit").value;
-      productList[index].description =
-        document.getElementById("description-edit").value;
-  
-      localStorage.setItem("productList", JSON.stringify(productList));
-      location.reload();
-      showData();
-      document.getElementById("id-edit").value = "";
-      document.getElementById("name-edit").value = "";
-      document.getElementById("price-edit").value = "";
-      document.getElementById("description-edit").value = "";
-      document.getElementById("close-btn").click();
-      alert("Data Updated Successfully");
+        productList[index].id = document.getElementById("id-edit").value;
+        productList[index].name = document.getElementById("name-edit").value;
+        productList[index].price = document.getElementById("price-edit").value;
+        productList[index].description =
+            document.getElementById("description-edit").value;
+
+        localStorage.setItem("productList", JSON.stringify(productList));
+        location.reload();
+        showData();
+        document.getElementById("id-edit").value = "";
+        document.getElementById("name-edit").value = "";
+        document.getElementById("price-edit").value = "";
+        document.getElementById("description-edit").value = "";
+        document.getElementById("close-btn").click();
+        alert("Data Updated Successfully");
     };
-  }
+}
 
 //for Search the data
 function searchBar() {
@@ -267,21 +263,31 @@ function searchBar() {
     let sortedProduct = JSON.parse(localStorage.getItem("productList")) ?? [];
     let regex = new RegExp(searchvalue, "i");
     for (let element of sortedProduct) {
-      const item = element;
-      if (regex.test(item.name)) {
-        sortedItem.push(element);
-      }
+        const item = element;
+        if (regex.test(item.name)) {
+            sortedItem.push(element);
+        }
     }
     console.log(sortedItem);
     searchProduct(sortedItem);
-  }
-  
-  function searchProduct(sortedItem) {
+}
+
+/**
+ * @function searchProduct
+ * 
+ * @description This function is generates HTML code to display search 
+ *              results for items. If there are no results, it displays an 
+ *              image and a error message. Otherwise, it generates a card 
+ *              for each product that matches the search query,
+ * 
+ * @param sortedItem (a array format)
+*/
+function searchProduct(sortedItem) {
     let html = "";
     console.log("searchProduct", sortedItem);
     if (sortedItem.length === 0) {
-      // Display an image if the productList array is empty
-      html += `<div class="card-body">
+        // Display an image if the productList array is empty
+        html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
@@ -292,9 +298,9 @@ function searchBar() {
         </div>
       </div>`;
     } else {
-      sortedItem.forEach(function (element, index) {
-        html += 
-        `<div>
+        sortedItem.forEach(function (element, index) {
+            html +=
+                `<div>
         <div class='row gx-2'>
         <div class='col'>
         <div class='p-3'>
@@ -317,65 +323,96 @@ function searchBar() {
         </div>
         </div>
         </div>`;
-      });
+        });
     }
     document.querySelector("#curd-table").classList.add("d-none");
     document.querySelector("#sort-table").innerHTML = html;
-  }
-
-// Filter Functions
-const selectElem = document.querySelector("#sort-select");
-selectElem.addEventListener("change", (event) => {
-  const sortBy = event.target.value;
-  filterProduct(sortBy); // perform the sorting action based on the selected value
-  if (sortBy == "refresh-btn") {
-    location.reload(); // refresh the page
-  }
-  // console.log(sortBy);
-});
-// For filter the data
-function filterProduct(sortvalue) {
-  let sortedProduct = JSON.parse(localStorage.getItem("sortedProduct")) ?? [];
-  let productList = JSON.parse(localStorage.getItem("productList")) ?? [];
-  sortedProduct = productList;
-  localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
-  // console.log('if',sortedProduct)
-  if (sortvalue == "desc") {
-    let desc = true;
-    sortedProduct = sortedProduct.sort((a, b) =>
-      desc ? b.id - a.id : a.id - b.id
-    );
-    desc = !desc;
-    console.log("descending", sortedProduct);
-    return filteredData(sortedProduct);
-  } else if (sortvalue == "asc") {
-    let desc = false;
-    sortedProduct = sortedProduct.sort((a, b) =>
-      desc ? b.id - a.id : a.id - b.id
-    );
-    console.log("Asc", sortedProduct);
-    return filteredData(sortedProduct);
-  } else if (sortvalue == "name") {
-    sortedProduct = sortedProduct = sortedProduct.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    console.log("name", sortedProduct);
-    return filteredData(sortedProduct);
-  } else if (sortvalue == "price") {
-    sortedProduct = sortedProduct.sort((a, b) => b.price - a.price);
-    console.log("Price", sortedProduct);
-    return filteredData(sortedProduct);
-  } else {
-    return false;
-  }
 }
 
+/**
+ * @function anonymous-Function (Arrow Function)
+ * 
+ * @description When the user selects an option from the dropdown menu of
+ *              sorting, the value of the selected option is stored in the sortBy variable. 
+ *              Then, the filterProduct function is called with sortBy as its 
+ *              argument to perform the sorting action based on the selected value.
+ * 
+ * @param change (it take any event as a parameter)
+ */
+const selectElem = document.querySelector("#sort-select");
+selectElem.addEventListener("change", (event) => {
+    const sortBy = event.target.value;
+    filterProduct(sortBy); // perform the sorting action based on the selected value
+    if (sortBy == "refresh-btn") {
+        location.reload(); // refresh the page
+    }
+});
+
+/** 
+ * @function filterProduct
+ * 
+ * @description Overall, this function seems to be designed to sort an array of 
+ *              products based on different criteria like (with name, id, price) 
+ *              and return the sorted data. 
+ * 
+ * @param sortvalue
+*/
+function filterProduct(sortvalue) {
+    let sortedProduct = JSON.parse(localStorage.getItem("sortedProduct")) ?? [];
+    let productList = JSON.parse(localStorage.getItem("productList")) ?? [];
+    sortedProduct = productList;
+    localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
+
+    /**
+     * @description This code block is a conditional statement that checks 
+     *              the value of the sortvalue parameter to determine the 
+     *              sorting criteria to be used for the product list.
+     */
+    if (sortvalue == "desc") {
+        let desc = true;
+        sortedProduct = sortedProduct.sort((a, b) =>
+            desc ? b.id - a.id : a.id - b.id
+        );
+        desc = !desc;
+        console.log("descending", sortedProduct);
+        return filteredData(sortedProduct);
+    }
+    else if (sortvalue == "asc") {
+        let desc = false;
+        sortedProduct = sortedProduct.sort((a, b) =>
+            desc ? b.id - a.id : a.id - b.id
+        );
+        console.log("Asc", sortedProduct);
+        return filteredData(sortedProduct);
+    } else if (sortvalue == "name") {
+        sortedProduct = sortedProduct = sortedProduct.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+        console.log("name", sortedProduct);
+        return filteredData(sortedProduct);
+    } else if (sortvalue == "price") {
+        sortedProduct = sortedProduct.sort((a, b) => b.price - a.price);
+        console.log("Price", sortedProduct);
+        return filteredData(sortedProduct);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * @function filteredData
+ * 
+ * @description This is a function is takes array as a parameter. The function 
+ *              generates HTML code to display the sorted products in a card format.
+ * 
+ * @param sortedProduct (as a Array format)
+ */
 function filteredData(sortedProduct) {
     let html = "";
     console.log("filterData", sortedProduct);
     if (sortedProduct.length === 0) {
-      // Display an image if the productList array is empty
-      html += `<div class="card-body">
+        // This Below HTML Code Display when product list's array is Empty.
+        html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
@@ -386,8 +423,9 @@ function filteredData(sortedProduct) {
         </div>
       </div>`;
     } else {
-      sortedProduct.forEach(function (element, index) {
-        html += `<div>
+        sortedProduct.forEach(function (element, index) {
+            // This Below HTML code is generate Card For Sorted Items.
+            html += `<div>
         <div class='row gx-2'>
         <div class='col'>
         <div class='p-3'>
@@ -410,8 +448,8 @@ function filteredData(sortedProduct) {
         </div>
         </div>
         </div>`;
-      });
+        });
     }
     document.querySelector("#curd-table").classList.add("d-none");
     document.querySelector("#sort-table").innerHTML = html;
-  }
+}
