@@ -23,7 +23,7 @@
 
 ## :rocket: Deployment Link
 
-- [CRUD-Operation](https://github.com/samarthdadhaniya)
+- [CRUD-Operation]([https://github.com/samarthdadhaniya](https://samarthdadhaniya.github.io/CRUD-Operation-in-LocalStorage/))
 <br><br>
 
 ## :technologist: Authors
