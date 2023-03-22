@@ -1,0 +1,137 @@
+body {
+    background-color: #e2e2e2
+  }
+  
+  .nav-bar
+  {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 2px 6px 1px rgb(141, 141, 141);
+  
+  }
+  
+  .card {
+    background-color: #fff;
+    border: none;
+    width: 17rem;
+    border-radius: 5px;
+    justify-content: space-evenly;
+  }
+  
+  @media(max-width:1024px)
+  {
+    .card-container{
+      justify-content: center;
+    }
+    .card{
+      width: 16rem;
+    }
+  }
+  @media(max-width:734px)
+  {
+    .search-bar{
+      width: 24rem !important;
+    }
+    .btn-add {
+      width: 7rem;
+    }
+    .btn-del {
+      width: 7rem;
+    }
+  }
+  @media(max-width:450px)
+  {
+    .search-bar{
+      width: 22.5rem !important;
+    }
+    .btn-add {
+      width: 12rem;
+    }
+    .btn-del {
+      width: 9rem;
+    }
+  }
+  @media(max-width:377px)
+  {
+    .search-bar{
+      width: 19rem !important;
+    }
+    .btn-add {
+      width: 8.5rem;
+    }
+    .btn-del {
+      width: 9rem;
+    }
+  }
+  
+  @media(max-width:322px)
+  {
+    .search-bar{
+      width: 15.8rem !important;
+    }
+    .btn-add {
+      width: 7rem;
+    }
+    .btn-del {
+      width: 7rem;
+    }
+  }
+  
+  .search-bar
+  {
+    border-radius: 4px;
+    width: auto;
+    border: 1px solid rgb(194, 194, 194);
+  }
+  
+  .form-control {
+    margin-top: 10px;
+    height: 40px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px
+  }
+  
+  .form-control-discription{
+    margin-top: 10px;
+    width: 100%;
+    text-align: top;
+    height: 7rem;
+    border: 2px solid #eee;
+    border-radius: 5px
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+    border: 1.5px solid #039BE5
+  }
+  
+  .confirm-button {
+      height: 40px;
+      width: 100%;
+    border-radius: 2px
+  }
+  
+  .btn-danger, .btn-primary, .btn-success, .btn-secondary
+  {
+    justify-content: center;
+    border-radius: 3px;
+  }
+  
+  .submitButton
+  {
+    background-color: rgb(73, 73, 255);
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .submitButton:hover
+  {
+    background-color: rgb(0, 0, 207);
+    color: white;
+  }
+  
+  .img-fluid{
+    width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+  
