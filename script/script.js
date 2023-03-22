@@ -1,11 +1,24 @@
+/**
+ * @projectName - CRUD Operation in LocalStorage
+ * 
+ * @description - CRUD operation in LocalStorage with search and sort functionality is a JavaScript program 
+ *                that allows users to create, read, update, and delete items from a productList stored in 
+ *                LocalStorage. It also includes search and sort functionality to easily find and organize 
+ *                products. Users can add, edit, and delete product details, including name, price, description, 
+ *                and image. The program generates an HTML code for each product card and displays them on the 
+ *                webpage. This program provides an efficient way to manage and manipulate data in LocalStorage.
+ * 
+ * @devloper - samarth dadhaniya
+ * 
+ * @github - https://github.com/samarthdadhaniya/CRUD-Operation-in-LocalStorage
+ */
+
 /** 
  * @function validateForm
  *  
- * @description This Function is used to validate the input fields of the form before submitting. It checks if the name 
- *              and price fields are not empty, if the price is a valid number and doesn't start with zero, if the 
- *              description field has a maximum of 50 characters and is not empty, and if an image is attached and its size and 
- *              type are valid. If any of the validation checks fail, the function returns false and an error message 
- *              is displayed to the user. If all checks pass, the function returns true and the form can be submitted.
+ * @description Function validates form input for name, price, description, 
+ *              and image attachment, returning true if valid and false 
+ *              with error message if not.
  * 
  * @param none
 */
@@ -16,7 +29,7 @@ function validateForm() {
     let descriptionInput = document.getElementById("description");
     let image = document.getElementById("inputGroupFile01");
 
-    // Get the values from the input fields
+    // Get the values from the input fields and remove extra white spaces.
     let name = nameInput.value.trim();
     let price = priceInput.value.trim();
 
@@ -45,6 +58,7 @@ function validateForm() {
     }
 
 
+    // Validate description input
     if (descriptionInput.value.length > 50) {
         document.getElementById("disc-error-msg").innerHTML = " Description can be maximum 50 characters";
         return false;
@@ -63,6 +77,7 @@ function validateForm() {
         document.getElementById("image-error-msg").innerHTML = ""
     }
 
+    // regular expression for image format
     let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     if (!allowedExtensions.exec(image.files[0].name)) {
         document.getElementById("image-error-msg").innerHTML = " Please attach a valid image file (jpg, jpeg, png, or gif)";
@@ -85,6 +100,16 @@ function validateForm() {
     return true;
 }
 
+/**
+ * @function showData
+ * 
+ * @description The function is retrieves the productList from localStorage, 
+ *              generates HTML code for each product card, and displays them 
+ *              on the webpage. It also handles empty productList and provides 
+ *              options to edit and delete each product.
+ * 
+ * @param none
+ */
 function showData() {
     let productList;
     if (localStorage.getItem("productList") == null) {
@@ -106,7 +131,6 @@ function showData() {
       </div>`;
     } else {
         productList.forEach(function (element, index) {
-            // Generate HTML for each product card
             html +=
                 `<div>
         <div class='row gx-2'>
@@ -141,14 +165,22 @@ function showData() {
 // Load all data when document or page load
 showData();
 
-// Function to add Data
+/**
+ * @function AddData
+ * 
+ * @description The function is adds a new product to the localStorage using 
+ *              form data, generates a new ID, and reloads the page to display 
+ *              the updated data. It also clears the form and displays an alert message.
+ * 
+ * @param none
+ */
 function AddData() {
     if (validateForm() == true) {
         let name = document.getElementById("name").value;
         let price = document.getElementById("price").value;
         let description = document.getElementById("description").value;
         let image = document.getElementById("inputGroupFile01");
-        const reader = new FileReader();
+        let reader = new FileReader();
 
         let productList;
         if (localStorage.getItem("productList") == null) {
@@ -164,6 +196,15 @@ function AddData() {
             id = Math.max(...ids) + 1;
         }
 
+        /**
+         * @function anonymous-Function (Arrow Function)
+         * 
+         * @description The function reads the data URL of an image file, and 
+         *              adds product details to the productList and stores it 
+         *              in localStorage.
+         * 
+         * @param none
+         */
         reader.readAsDataURL(image.files[0]);
         reader.addEventListener("load", () => {
             productList.push({
@@ -187,7 +228,15 @@ function AddData() {
     }
 }
 
-// Function to Delete Data
+/**
+ * @function deleteData
+ * 
+ * @description This function deletes an item from an array called 'productList' 
+ *              and updates local storage. It also displays a confirmation message 
+ *              to the user before deleting the item.
+ * 
+ * @param index
+ */
 function deleteData(index) {
     let productList;
     if (localStorage.getItem("productList") == null) {
@@ -205,7 +254,16 @@ function deleteData(index) {
     }
 }
 
-// Function to update/Edit the data in local storage
+/**
+ * @function editData
+ * 
+ * @description -This function edits the details of a product at a specific index. It 
+ *               reads the data from local storage and updates the HTML elements with 
+ *               the corresponding values. It also adds event handlers for an image and 
+ *               a button to update the data.
+ * 
+ * @param index
+ */
 function editData(index) {
     let productList;
     if (localStorage.getItem("productList") == null) {
@@ -225,6 +283,15 @@ function editData(index) {
     document.getElementById("image-div").innerHTML =
         "<img src=" + productList[index].image + " width='100%' height='100%'>";
 
+    /**
+     * @function anonymous-Function (Arrow Function)
+     * 
+     * @description this function is used When the user selects an image file using the file dialog 
+     *              input element, the function reads the contents of the selected file and updates 
+     *              the image property of a iten object at a specific index in an array called productList.
+     * 
+     * @param event
+     */
     let imageEdit = document.getElementById("image-edit");
     imageEdit.onchange = function (event) {
         let file = event.target.files[0];
@@ -236,15 +303,26 @@ function editData(index) {
         reader.readAsDataURL(file);
     };
 
+    /**
+     * @function anonymous-Function (Arrow Function)
+     * 
+     * @description The code defines an event handler function for the onclick event of an 
+     *              HTML element with an id of "update". When the user clicks on this element, 
+     *              the function performs a series of actions related to updating a item's details,
+     *              and store updated details into localstorage.
+     * 
+     * @param none
+     */
     document.querySelector("#update").onclick = function () {
         productList[index].id = document.getElementById("id-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].price = document.getElementById("price-edit").value;
-        productList[index].description =
-            document.getElementById("description-edit").value;
-
+        productList[index].description = document.getElementById("description-edit").value;
+        // this line is used to convert the array to a JSON string before it is saved to local storage.
         localStorage.setItem("productList", JSON.stringify(productList));
+        // The is method, which refreshes the page with the updated data.
         location.reload();
+
         showData();
         document.getElementById("id-edit").value = "";
         document.getElementById("name-edit").value = "";
@@ -255,15 +333,24 @@ function editData(index) {
     };
 }
 
-//for Search the data
+/**
+ * @function searchBar
+ * 
+ * @description This function is designed to search for products in a Arraylist 
+ *              based on user input. It first gets the search value from an input 
+ *              field with an id of "searchProductText". It then give an array of 
+ *              item from the local storage using the key "productList".
+ * 
+ * @param none
+ */
 function searchBar() {
-    const searchvalue = document.querySelector("#serachProductText").value;
+    let searchvalue = document.querySelector("#serachProductText").value;
     console.log(searchvalue);
     let sortedItem = [];
     let sortedProduct = JSON.parse(localStorage.getItem("productList")) ?? [];
     let regex = new RegExp(searchvalue, "i");
     for (let element of sortedProduct) {
-        const item = element;
+        let item = element;
         if (regex.test(item.name)) {
             sortedItem.push(element);
         }
@@ -339,9 +426,9 @@ function searchProduct(sortedItem) {
  * 
  * @param change (it take any event as a parameter)
  */
-const selectElem = document.querySelector("#sort-select");
+let selectElem = document.querySelector("#sort-select");
 selectElem.addEventListener("change", (event) => {
-    const sortBy = event.target.value;
+    let sortBy = event.target.value;
     filterProduct(sortBy); // perform the sorting action based on the selected value
     if (sortBy == "refresh-btn") {
         location.reload(); // refresh the page
